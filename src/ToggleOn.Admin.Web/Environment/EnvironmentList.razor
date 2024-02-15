@@ -1,0 +1,30 @@
+﻿@if (environments is null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudGrid Justify="Justify.FlexEnd">
+        <MudItem>
+            <CreateEnvironment ProjectId="ProjectId" OnAdded="OnEnvAdded" />
+        </MudItem>
+
+        <MudItem xs="12">
+            @if (environments.Any())
+            {
+                <MudTabs Elevation="1" Rounded="true" PanelClass="pt-6" @bind-ActivePanelIndex="@selectedEnvIndex">
+                    @foreach (var env in environments)
+                    {
+                        <MudTabPanel Text="@env.Name">
+                            <FeatureToggleList ProjectId="ProjectId" EnvironmentId="@env.Id" Environments="@environments" />
+                        </MudTabPanel>
+                    }
+                </MudTabs>
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">No Environments Yet</MudAlert>
+            }
+        </MudItem>
+    </MudGrid>
+}

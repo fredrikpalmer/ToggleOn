@@ -1,0 +1,48 @@
+﻿@page "/featuregroups"
+
+<PageTitle>FeatureGroups</PageTitle>
+
+@if (_featureGroups == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudGrid Justify="Justify.FlexEnd">
+        <MudItem>
+            <MudButton Variant="Variant.Outlined" OnClick="OnAddClick">
+                <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-2" />
+                Add Group
+            </MudButton>
+        </MudItem>
+        <MudItem xs="12">
+            @if (_featureGroups.Any())
+            {
+                <MudDataGrid T="FeatureGroupViewModel" Items="@_featureGroups" RowClass="cursor-pointer">
+                    <Columns>
+                        <PropertyColumn Property="x => x.Id" Title="Id" IsEditable="false" />
+                        <PropertyColumn Property="x => x.Name" Title="Name" />
+                        <TemplateColumn>
+                            <CellTemplate>
+                                <MudIconButton Class="cursor-pointer" Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="(e) => OnEditClick(context.Item)" />
+                            </CellTemplate>
+                        </TemplateColumn>
+                        <TemplateColumn>
+                            <CellTemplate>
+                                <MudIconButton Class="cursor-not-allowed" Icon="@Icons.Material.Outlined.Delete" Size="@Size.Small" />
+                            </CellTemplate>
+                        </TemplateColumn>
+                    </Columns>
+                    <PagerContent>
+                        <MudDataGridPager T="FeatureGroupViewModel" />
+                    </PagerContent>
+                </MudDataGrid>
+
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">No FeatureGroups Yet</MudAlert>
+            }
+        </MudItem>
+    </MudGrid>
+}

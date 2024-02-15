@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ToggleOn.Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7071",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "WEBSITE_SITE_NAME": "func-toggleon-dev"
+      }
+    }
+  }
+}

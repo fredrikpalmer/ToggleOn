@@ -1,0 +1,40 @@
+name: 'deploy'
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+        required: true
+  
+jobs:
+  iac:
+    uses: './.github/workflows/iac.yml'
+    with:
+      command: 'apply'
+      environment: ${{ inputs.environment }}
+    secrets: inherit
+  
+  api:
+    needs: iac
+    uses: './.github/workflows/api.yml'
+    with: 
+      environment: ${{ inputs.environment }}
+    secrets: inherit
+
+  functions:
+    needs: iac
+    uses: './.github/workflows/functions.yml'
+    with:
+      environment: ${{ inputs.environment }}
+    secrets: inherit
+
+  web:
+    needs: iac
+    uses: './.github/workflows/web.yml'
+    with:
+      environment: ${{ inputs.environment }}
+    secrets:
+      deployment_token: ${{ needs.iac.outputs.deployment_token }}
+
+

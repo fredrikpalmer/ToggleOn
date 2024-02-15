@@ -1,0 +1,45 @@
+﻿@page "/"
+@page "/projects"
+
+<PageTitle>Projects</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">Projects</MudText>
+@if (projects == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudGrid Justify="Justify.FlexEnd">
+        <MudItem>
+            <MudButton Variant="Variant.Outlined" OnClick="OnAddClick">
+                <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-2" />
+                Add
+            </MudButton>
+        </MudItem>
+        <MudItem xs="12">
+            @if(projects.Any())
+            {
+                    <MudDataGrid T="ProjectViewModel" Items="@projects" RowClick="OnProjectClick" RowClass="cursor-pointer" ReadOnly="false" EditMode="DataGridEditMode.Form">
+                        <Columns>
+                            <PropertyColumn Property="x => x.Id" Title="Id" IsEditable="false" />
+                            <PropertyColumn Property="x => x.Name" Title="Name" />
+                            <TemplateColumn>
+                                <CellTemplate>
+                                    <MudIconButton Class="cursor-not-allowed" Icon="@Icons.Material.Outlined.Delete" Size="@Size.Small" OnClick="(e) => OnDeleteClick(context.Item.Id)" />
+                                </CellTemplate>
+                            </TemplateColumn>
+                        </Columns>
+                        <PagerContent>
+                            <MudDataGridPager T="ProjectViewModel" />
+                        </PagerContent>
+                    </MudDataGrid>
+            
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">No Projects Yet</MudAlert>
+            }
+        </MudItem>
+    </MudGrid>
+}

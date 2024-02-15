@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFramework>net6.0</TargetFramework>
+	  <Nullable>enable</Nullable>
+	  <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ToggleOn.Data.Abstractions\ToggleOn.Data.Abstractions.csproj" />
+    <ProjectReference Include="..\ToggleOn.Abstractions\ToggleOn.Abstractions.csproj" />
+    <ProjectReference Include="..\ToggleOn.Command.Contract\ToggleOn.Command.Contract.csproj" />
+    <ProjectReference Include="..\ToggleOn.Domain\ToggleOn.Domain.csproj" />
+    <ProjectReference Include="..\ToggleOn.Messaging.Contract\ToggleOn.Messaging.Contract.csproj" />
+  </ItemGroup>
+
+</Project>

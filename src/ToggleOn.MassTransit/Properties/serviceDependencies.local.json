@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "compute.function.linux1": {
+      "group": "connections",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Web/sites/func-toggleon-dev",
+      "type": "compute.function.linux.consumption"
+    }
+  }
+}

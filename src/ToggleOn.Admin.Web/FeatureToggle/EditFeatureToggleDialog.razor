@@ -1,0 +1,43 @@
+﻿<EditForm Model="@Model" OnValidSubmit="Submit">
+    <MudDialog>
+        <DialogContent>
+            <DataAnnotationsValidator />
+
+            <MudSwitch T="bool" @bind-Value="@Model.Enabled" Label="@(Model.Enabled ? "On" : "Off")" Color="Color.Success" />
+
+
+            <MudGrid Class="mt-3">
+                <MudItem>
+                    <MudButton Variant="Variant.Outlined" OnClick="OnAddClick">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-2"  />
+                        Create
+                    </MudButton>
+                </MudItem>
+                <MudItem xs="12">
+                    <MudDataGrid T="AddFilterViewModel" Items="@Model.Filters">
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="Name" />
+                            <TemplateColumn Title="Parameters">
+                                <CellTemplate Context="paramContext">@paramContext.Item.Parameters.Count parameter(s)</CellTemplate>
+                            </TemplateColumn>
+                            <TemplateColumn>
+                                <CellTemplate Context="editContext">
+                                    <MudIconButton Class="cursor-pointer" Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="(e) => OnEditClick(editContext.Item)" />
+                                </CellTemplate>
+                            </TemplateColumn>
+                            <TemplateColumn>
+                                <CellTemplate Context="deleteContext">
+                                    <MudIconButton Class="cursor-not-allowed" Icon="@Icons.Material.Outlined.Delete" Size="@Size.Small" OnClick="(e) => OnDeleteClick(deleteContext.Item)" />
+                                </CellTemplate>
+                            </TemplateColumn>
+                        </Columns>
+                    </MudDataGrid>
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Color="@Color" Variant="Variant.Filled">@ButtonText</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

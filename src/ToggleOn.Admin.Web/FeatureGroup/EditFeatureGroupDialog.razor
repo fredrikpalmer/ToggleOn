@@ -1,0 +1,14 @@
+﻿<EditForm Model="@Model" OnValidSubmit="Submit">
+    <MudDialog>
+        <DialogContent>
+            <DataAnnotationsValidator />
+
+            <MudTextField Label="UserIds" Class="mb-3" @bind-Value="@Model.UserIds" For="@(() => Model.UserIds)" />
+            <MudTextField Label="IpAddresses" Class="mb-3" @bind-Value="@Model.IpAddresses" For="@(() => Model.IpAddresses)" />
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Color="@Color" Variant="Variant.Filled">@ButtonText</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>

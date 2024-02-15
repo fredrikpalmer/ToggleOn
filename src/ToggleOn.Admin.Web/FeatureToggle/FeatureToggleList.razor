@@ -1,0 +1,49 @@
+﻿@if (featureToggles == null)
+{
+    <MudProgressCircular Color="Color.Default" Indeterminate="true" />
+}
+else
+{
+    <MudGrid Justify="Justify.FlexEnd">
+        <MudItem>
+            <MudButton Variant="Variant.Outlined" OnClick="OnAddClick">
+                <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-2" />
+                Add Toggle
+            </MudButton>
+        </MudItem>
+        <MudItem xs="12">
+            @if(featureToggles.Any())
+            {
+                    <MudDataGrid T="FeatureToggleViewModel" Items="@featureToggles" ReadOnly="false" EditMode="DataGridEditMode.Form">
+                        <Columns>
+                            <PropertyColumn Property="x => x.Id" Title="Id" IsEditable="false" />
+                            <PropertyColumn Property="x => x.Name" Title="Name" />
+                            <TemplateColumn>
+                                <CellTemplate>
+                                    <MudSwitch T="bool" Value="@context.Item.Enabled" Label="@(context.Item.Enabled ? "On" : "Off")" Color="Color.Success" ValueChanged="(enabled) => OnUpdateFeatureToggleEnabled(context.Item, enabled)" />
+                                </CellTemplate>
+                            </TemplateColumn>
+                            <TemplateColumn>
+                                <CellTemplate>
+                                    <MudIconButton Class="cursor-pointer" Icon="@Icons.Material.Outlined.Edit" Size="@Size.Small" OnClick="(e) => OnEditClick(context.Item)" />
+                                </CellTemplate>
+                            </TemplateColumn>
+                            <TemplateColumn>
+                                <CellTemplate>
+                                    <MudIconButton Class="cursor-not-allowed" Icon="@Icons.Material.Outlined.Delete" Size="@Size.Small" />
+                                </CellTemplate>
+                            </TemplateColumn>
+                        </Columns>
+                        <PagerContent>
+                            <MudDataGridPager T="FeatureToggleViewModel" />
+                        </PagerContent>
+                    </MudDataGrid>
+            
+            }
+            else
+            {
+                <MudAlert Severity="Severity.Info" Variant="Variant.Outlined">No FeatureToggles Yet</MudAlert>
+            }
+            </MudItem>
+    </MudGrid>
+}

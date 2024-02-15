@@ -1,0 +1,29 @@
+﻿<EditForm Model="@Model" OnValidSubmit="Submit">
+    <MudDialog>
+        <DialogContent>
+            <DataAnnotationsValidator />
+
+            <MudTextField @bind-Value="@Model.Name" Label="Name" Variant="Variant.Text"></MudTextField>
+
+            <MudGrid Class="mt-3">
+                <MudItem xs="12">
+                    <MudDataGrid T="AddFilterParameterViewModel" Items="@_parameters" ReadOnly="false" EditMode="DataGridEditMode.Cell" CommittedItemChanges="CommittedItemChanges">
+                        <Columns>
+                            <PropertyColumn Property="x => x.Name" Title="Name" />
+                            <PropertyColumn Property="x => x.Value" Title="Value" />
+                            <TemplateColumn>
+                                <EditTemplate Context="deleteContext">
+                                    <MudIconButton Class="cursor-not-allowed" Disabled="@(string.IsNullOrWhiteSpace(deleteContext.Item.Name) || string.IsNullOrWhiteSpace(deleteContext.Item.Value))" Icon="@Icons.Material.Outlined.Delete" Size="@Size.Small" OnClick="(e) => OnDeleteClick(deleteContext.Item)" />
+                                </EditTemplate>
+                            </TemplateColumn>
+                        </Columns>
+                    </MudDataGrid>
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton ButtonType="ButtonType.Submit" Color="@Color" Variant="Variant.Filled">@ButtonText</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
