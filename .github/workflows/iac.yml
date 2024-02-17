@@ -113,6 +113,11 @@ jobs:
         echo "$GITHUB_OUTPUT"
       working-directory: iac 
 
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_RBAC_CREDENTIALS }}
+
     - name: SQL - Add external identity
       if: ${{ inputs.command == 'apply' }}
       uses: Azure/sql-action@v2.2.1
