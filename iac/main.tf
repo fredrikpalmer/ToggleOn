@@ -261,6 +261,9 @@ resource "azurerm_linux_web_app" "api" {
   virtual_network_subnet_id = azurerm_subnet.integration-subnet.id
 
   site_config {
+    application_stack {
+      dotnet_version = "8.0"
+    }
     cors {
       allowed_origins = ["https://${azurerm_static_site.admin.default_host_name}"]
     }
