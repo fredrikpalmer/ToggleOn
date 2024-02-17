@@ -118,23 +118,21 @@ jobs:
       uses: Azure/sql-action@v2.2.1
       with:
         # The connection string, including authentication information, for the Azure SQL Server database.
-        connection-string: ${{ format('Server=tcp:sql-toggleon-{0}.database.windows.net,1433;Initial Catalog=sqldb-toggleon-dev;Persist Security Info=False;User ID=dbadmin;Password={1};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;', env.ENVIRONMENT, env.PASSWORD) }}
+        connection-string: ${{ format('Server=tcp:sql-toggleon-{0}.database.windows.net,1433;Initial Catalog=sqldb-toggleon-{0};Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=Active Directory Default', env.ENVIRONMENT) }}
         # Path to the file used for this action. Supported file types are .sql, .dacpac, or .sqlproj.
         path: src/ToggleOn.EntityFrameworkCore.SqlServer/Migrations/ExternalIdentity.sql
       env:
         ENVIRONMENT: ${{ inputs.environment }}
-        PASSWORD: ${{ steps.terraform-output.outputs.DB_PASSWORD }}
 
     - name: SQL - Add migrations
       if: ${{ inputs.command == 'apply' }}
       uses: Azure/sql-action@v2.2.1
       with:
         # The connection string, including authentication information, for the Azure SQL Server database.
-        connection-string: ${{ format('Server=tcp:sql-toggleon-{0}.database.windows.net,1433;Initial Catalog=sqldb-toggleon-dev;Persist Security Info=False;User ID=dbadmin;Password={1};MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;', env.ENVIRONMENT, env.PASSWORD) }}        
+        connection-string: ${{ format('Server=tcp:sql-toggleon-{0}.database.windows.net,1433;Initial Catalog=sqldb-toggleon-{0};Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;Authentication=Active Directory Default', env.ENVIRONMENT) }}        
         # Path to the file used for this action. Supported file types are .sql, .dacpac, or .sqlproj.
         path: src/ToggleOn.EntityFrameworkCore.SqlServer/Migrations/MigrationScript.sql
       env:
         ENVIRONMENT: ${{ inputs.environment }}
-        PASSWORD: ${{ steps.terraform-output.outputs.DB_PASSWORD }}
           
 
