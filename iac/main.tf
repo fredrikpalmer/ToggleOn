@@ -137,6 +137,15 @@ resource "azurerm_mssql_server" "sql" {
   }
 }
 
+resource "azuread_directory_role" "ad-dr" {
+  display_name = "Directory Readers"
+}
+
+resource "azuread_directory_role_assignment" "ad-dra" {
+  role_id             = azuread_directory_role.ad-dr.id
+  principal_object_id = azurerm_mssql_server.sql.identity.0.principal_id
+}
+
 resource "azurerm_mssql_firewall_rule" "sql-firewall-rule" {
   name             = "sfwr-toggleon-${var.env}"
   server_id        = azurerm_mssql_server.sql.id
