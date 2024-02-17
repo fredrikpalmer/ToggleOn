@@ -128,6 +128,10 @@ resource "azurerm_mssql_server" "sql" {
     object_id      = data.azuread_group.aad_admins.object_id
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   tags = {
     environment = var.env
   }
